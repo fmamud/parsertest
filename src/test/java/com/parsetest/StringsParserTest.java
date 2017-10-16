@@ -16,48 +16,63 @@ public class StringsParserTest {
     @Test
     public void simpleTest() {
         Strings strings = parser.parse("tincas");
-        assertEquals("tincas", strings.getStrings());
+        assertEquals(1, strings.size());
+        assertEquals("tincas", strings.toString());
     }
 
     @Test
     public void twiceTest() {
         Strings strings = parser.parse("tincas trolha");
-        assertEquals("tincas,trolha", strings.getStrings());
+        assertEquals(2, strings.size());
+        assertEquals("tincas,trolha", strings.toString());
     }
 
     @Test
     public void threeTimesTest() {
         Strings strings = parser.parse("tincas trolha dumbs");
-        assertEquals("tincas,trolha,dumbs", strings.getStrings());
+        assertEquals(3, strings.size());
+        assertEquals("tincas,trolha,dumbs", strings.toString());
     }
 
     @Test
     public void parenthesesTest() {
         Strings strings = recursiveParser.parse("(tincas)");
-        assertEquals("tincas", strings.getStrings());
+        assertEquals(1, strings.size());
+        assertEquals("tincas", strings.toString());
     }
 
     @Test
     public void recursiveTest() {
         Strings strings = recursiveParser.parse("tincas (dunhas)");
-        assertEquals("tincas,dunhas", strings.getStrings());
+        assertEquals(2, strings.size());
+        assertEquals("tincas,dunhas", strings.toString());
+    }
+
+    @Test
+    public void recursiveTestBad() {
+        Strings strings = recursiveParser.parse("(tincas) (dunhas)");
+        assertEquals(2, strings.size());
+        assertEquals("tincas,dunhas", strings.toString());
     }
 
     @Test
     public void recursiveStartsParensTest() {
         Strings strings = recursiveParser.parse("(tincas (dunhas))");
-        assertEquals("tincas,dunhas", strings.getStrings());
+        assertEquals(2, strings.size());
+        assertEquals("tincas,dunhas", strings.toString());
     }
 
     @Test
     public void recursiveTwoLevelsTest() {
         Strings strings = recursiveParser.parse("(tincas (dunhas (js)))");
-        assertEquals("tincas,dunhas,js", strings.getStrings());
+        assertEquals(3, strings.size());
+        assertEquals("tincas,dunhas,js", strings.toString());
     }
 
     @Test
     public void recursiveManyLevelsTest() {
         Strings strings = recursiveParser.parse("(tincas (dunhas (socks (xpto cool))))");
-        assertEquals("tincas,dunhas,socks,xpto,cool", strings.getStrings());
+        assertEquals(5, strings.size());
+        assertEquals("tincas,dunhas,socks,xpto,cool", strings.toString());
     }
 }
